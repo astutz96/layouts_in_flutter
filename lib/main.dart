@@ -33,6 +33,51 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class Favorited extends StatefulWidget {
+  @override
+  _FavoritedState createState() => _FavoritedState();
+}
+
+class _FavoritedState extends State<Favorited> {
+  bool _isFavorited = true;
+  int _favoriteCount = 41;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          padding: EdgeInsets.all(0),
+          child: IconButton(
+            padding: EdgeInsets.all(0),
+            alignment: Alignment.centerRight,
+            icon: (_isFavorited ? Icon(Icons.star) : Icon(Icons.star_border)),
+            onPressed: _toggleFavorite,
+          ),
+        ),
+        SizedBox(
+          child: Container(
+            child: Text('$_favoriteCount'),
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _toggleFavorite() {
+    setState(() {
+      if (_isFavorited) {
+        _favoriteCount -= 1;
+        _isFavorited = false;
+      } else {
+        _favoriteCount += 1;
+        _isFavorited = true;
+      }
+    });
+  }
+}
+
 class TextSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -40,23 +85,20 @@ class TextSection extends StatelessWidget {
       padding: const EdgeInsets.all(32),
       child: Text(
         'Lake Oeschinen lies at the foot of the Blüemlisalp in the Bernese '
-            'Alps. Situated 1,578 meters above sea level, it is one of the '
-            'larger Alpine Lakes. A gondola ride from Kandersteg, followed by a '
-            'half-hour walk through pastures and pine forest, leads you to the '
-            'lake, which warms to 20 degrees Celsius in the summer. Activities '
-            'enjoyed here include rowing, and riding the summer toboggan run.',
+        'Alps. Situated 1,578 meters above sea level, it is one of the '
+        'larger Alpine Lakes. A gondola ride from Kandersteg, followed by a '
+        'half-hour walk through pastures and pine forest, leads you to the '
+        'lake, which warms to 20 degrees Celsius in the summer. Activities '
+        'enjoyed here include rowing, and riding the summer toboggan run.',
         softWrap: true,
       ),
     );
   }
 }
 
-
 class ButtonSection extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-
     Color color = Theme.of(context).primaryColor;
 
     return Container(
@@ -71,7 +113,7 @@ class ButtonSection extends StatelessWidget {
     );
   }
 
-  Column _buildButtonColumn(Color color, IconData icon, String label){
+  Column _buildButtonColumn(Color color, IconData icon, String label) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -79,14 +121,12 @@ class ButtonSection extends StatelessWidget {
         Icon(icon, color: color),
         Container(
           margin: const EdgeInsets.only(top: 8),
-          child: Text(
-            label,
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w400,
-              color: color,
-            )
-          ),
+          child: Text(label,
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+                color: color,
+              )),
         )
       ],
     );
@@ -102,31 +142,26 @@ class TitleSection extends StatelessWidget {
         children: <Widget>[
           Expanded(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: Text(
-                      'Oeschinen Lake Campground',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Text(
+                  'Oeschinen Lake Campground',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
                   ),
-                  Text(
-                    'Kandersteg, Switzerland',
-                    style: TextStyle(
-                      color: Colors.grey[500],
-                    ),
-                  )
-                ],
+                ),
+              ),
+              Text(
+                'Kandersteg, Switzerland',
+                style: TextStyle(
+                  color: Colors.grey[500],
+                ),
               )
-          ),
-          Icon(
-            Icons.star,
-            color: Colors.red,
-          ),
-          Text('41'),
+            ],
+          )),
+          Favorited(),
         ],
       ),
     );
